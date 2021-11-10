@@ -1,15 +1,46 @@
+let myHeaders = []; //this array will contain all the headers from the table. gets the data from the function BindTableHeader()
+
+function removeSymbols(theString){
+    let output = theString.replace(
+        /^(?:')(.*)(?:')$/,
+        "$1"
+      );
+      return output;
+}
+
+
 function createChart(theData){
     
 const ctx = document.getElementById('myChart').getContext('2d');
 
 /*this is my code*/
-//let subjects = [...theData[0].all];
-let myArray = theData.map(variable =>{
-    
-    theData[0].all;
+//let subjects = [...theData[0]];
 
-});
-alert(myArray);
+//console.log(subjects);
+
+/**
+ * myArray is an object
+ *
+ *all =  is the key name that extract from theData.
+ *key = is the position and becomes a key value in the new object.
+ *example of the object {0: '3', 1: '22', 2: '20', 3: '0', 4: '42', 5: '89'}
+ *myArray[0] = 3
+ */
+ for (let header in myHeaders) {
+    let myArray = Object.fromEntries(Object
+        .entries(theData)
+        .map(([key, {header}]) => [key, header])
+    );
+
+    console.log(myArray);
+ }
+
+let myArray = Object.fromEntries(Object
+    .entries(theData)
+    .map(([key, { all }]) => [key, all])
+);
+
+console.log(myHeaders);
 
 
 /*----------------*/
@@ -120,7 +151,8 @@ function BindTable(jsondata, tableid) {/*Function used to convert the JSON array
             var cellValue = jsondata[i][columns[colIndex]];  
             if (cellValue == null)  
                 cellValue = "";  
-            row$.append($('<td/>').html(cellValue));  
+            row$.append($('<td/>').html(cellValue));
+
         }  
         $(tableid).append(row$);  
     }  
@@ -135,6 +167,7 @@ function BindTableHeader(jsondata, tableid) {/*Function used to get all column n
                 if ($.inArray(key, columnSet) == -1) {/*Adding each unique column names to a variable array*/  
                     columnSet.push(key);  
                     headerTr$.append($('<th/>').html(key));  
+                    myHeaders.push(key);//this is my code it push the headers into one array named myHeaders
                 }  
             }  
         }  
