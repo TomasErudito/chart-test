@@ -1,13 +1,24 @@
 let myHeaders = []; //this array will contain all the headers from the table. gets the data from the function BindTableHeader()
-
+let allValues = [];
 function removeSymbols(theString){
     let output = theString.replace(
         /^(?:')(.*)(?:')$/,
         "$1"
       );
       return output;
-}
+};
 
+function extractValues(theData, theString){
+    let values = [];
+    for(i=0; i<theData.length;i++){
+        let element = theData[i];
+        let valueName = element[theString];
+        values.push(valueName);
+    }
+
+    console.log(values +" array with the key " + theString);
+    return values;
+};
 
 function createChart(theData){
     
@@ -26,21 +37,44 @@ const ctx = document.getElementById('myChart').getContext('2d');
  *example of the object {0: '3', 1: '22', 2: '20', 3: '0', 4: '42', 5: '89'}
  *myArray[0] = 3
  */
- for (let header in myHeaders) {
-    let myArray = Object.fromEntries(Object
-        .entries(theData)
-        .map(([key, {header}]) => [key, header])
-    );
-
-    console.log(myArray);
- }
-
 let myArray = Object.fromEntries(Object
     .entries(theData)
     .map(([key, { all }]) => [key, all])
 );
 
-console.log(myHeaders);
+for(let i=0 ; i < myHeaders.length ; i++){
+    let value = myHeaders[i];
+    let values = [];
+    for(let i=0; i<theData.length;i++){
+        let element = theData[i];
+        let valueName = element[value];
+        values.push(valueName);
+    }
+
+    console.log(values +" array with the key " + value);
+    //myChart.data.labels.push[value];
+    //console.log(myChart.data.labels);
+    allValues.push(values);
+};
+
+console.log(allValues)
+
+//This is not working
+/*
+ for (let i of myHeaders) {
+    let myN = i;
+    let myArray = Object.fromEntries(Object
+        .entries(theData)
+        .map((key, { myN }) => [key, myN])
+    );
+
+    console.log(myArray);
+    console.log(myN);
+ };
+*/
+
+
+//console.log(myHeaders);
 
 
 /*----------------*/
@@ -49,7 +83,7 @@ console.log(myHeaders);
 const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: [],
         datasets: [{
             label: '# of Votes',
             data: [12, 19, 3, 5, 2, 3],
@@ -80,7 +114,8 @@ const myChart = new Chart(ctx, {
         }
     }
 });
-
+myChart.data.labels = myHeaders;
+console.log(myChart.data.labels);
 };
 
 
