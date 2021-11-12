@@ -91,7 +91,7 @@ function drawChart(headers, values){
 const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: [],
+        labels: myHeaders,
         datasets: [{
             label: headers,
             data: values,
