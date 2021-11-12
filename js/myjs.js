@@ -49,44 +49,52 @@ for(let i=0 ; i < myHeaders.length ; i++){
         let element = theData[i];
         let valueName = element[value];
         values.push(valueName);
+       
     }
-
     console.log(values +" array with the key " + value);
     //myChart.data.labels.push[value];
     //console.log(myChart.data.labels);
     allValues.push(values);
 };
-
 console.log(allValues)
 
+drawChart(myHeaders[0], allValues[0]);
 //This is not working
 /*
- for (let i of myHeaders) {
-    let myN = i;
+ for(let i=0 ; i < myHeaders.length ; i++){
+    let myN = myHeaders[i];
+    let cleanValue = removeSymbols(myN);
     let myArray = Object.fromEntries(Object
         .entries(theData)
-        .map((key, { myN }) => [key, myN])
+        .map((key, { cleanValue }) => [key, cleanValue])
     );
 
     console.log(myArray);
     console.log(myN);
  };
-*/
+
 
 
 //console.log(myHeaders);
-
+*/
 
 /*----------------*/
 
+
+/**
+ * This function draw the chart with the values send in the object values and use the headers from the array headers
+ *
+ *
+ */
+function drawChart(headers, values){
 
 const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
         labels: [],
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            label: headers,
+            data: values,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -114,8 +122,9 @@ const myChart = new Chart(ctx, {
         }
     }
 });
-myChart.data.labels = myHeaders;
-console.log(myChart.data.labels);
+};
+
+
 };
 
 
