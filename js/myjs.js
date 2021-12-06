@@ -10,7 +10,7 @@ function removeSymbols(theString){
 
 function extractValues(theData, theString){
     let values = [];
-    for(i=0; i<theData.length;i++){
+    for(i=1; i<theData.length;i++){
         let element = theData[i];
         let valueName = element[theString];
         values.push(valueName);
@@ -42,7 +42,7 @@ let myArray = Object.fromEntries(Object
     .map(([key, { all }]) => [key, all])
 );
 
-for(let i=0 ; i < myHeaders.length ; i++){
+for(let i=1 ; i < myHeaders.length ; i++){
     let value = myHeaders[i];
     let values = [];
     for(let i=0; i<theData.length;i++){
